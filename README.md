@@ -10,8 +10,8 @@ The project is built around two principles: the JSON instruction tables are the 
 
 For deep dives into architecture, testing, and other topics, refer to the following documents:
 
-* 📖 **[Technical Documentation (DOCS.md)](file:///Users/alexysalcedo/Documents/GitHub/Instruction_Decoder/DOCS.md)**: Details the architecture, pipeline stages (assembly parser, instruction parser, handler registry, etc.), supported instructions, utility functions, error handling, and design choices.
-* 🧪 **[Testing Strategy & Suites (TESTING.md)](file:///Users/alexysalcedo/Documents/GitHub/Instruction_Decoder/TESTING.md)**: Outlines the testing strategy, describes the 12 specific test suites (integration, E2E, boundary, performance, stress, regression, etc.), and lists commands for running them.
+* 📖 **[Technical Documentation (DOCS.md)](./DOCS.md)**: Details the architecture, pipeline stages (assembly parser, instruction parser, handler registry, etc.), supported instructions, utility functions, error handling, and design choices.
+* 🧪 **[Testing Strategy & Suites (TESTING.md)](./TESTING.md)**: Outlines the testing strategy, describes the 12 specific test suites (integration, E2E, boundary, performance, stress, regression, etc.), and lists commands for running them.
 
 ---
 
@@ -98,4 +98,4 @@ pnpm test run
 npm run test -- --run
 ```
 
-For more detailed test options (e.g. watch mode, coverage reporting, running specific test files), please see [TESTING.md](file:///Users/alexysalcedo/Documents/GitHub/Instruction_Decoder/TESTING.md).
+For more detailed test options (e.g. watch mode, coverage reporting, running specific test files), please see [TESTING.md](./TESTING.md).

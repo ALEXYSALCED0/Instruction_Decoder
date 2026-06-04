@@ -46,7 +46,7 @@ The project contains **12 specific test files** in the `test/` directory, coveri
 ---
 
 ### 1. INTEGRATION TESTS
-* **File:** [test/integration.test.ts](file:///c:/Users/sebas/OneDrive/Escritorio/Arkad/Instruction_Decoder/test/integration.test.ts)
+* **File:** [test/integration.test.ts](./test/integration.test.ts)
 * **Goal:** Validate the integration of the complete flow (`assembly code` ➔ `32-bit hexadecimal` ➔ `decoded instruction` ➔ `formatted text`).
 * **Key Details:**
   * Compares exact instruction encodings, such as `lw $s0, 4($sp)` (resulting in `0x8FB00004`).
@@ -63,7 +63,7 @@ pnpm test test/integration.test.ts --run
 ---
 
 ### 2. END-TO-END TESTS (E2E)
-* **File:** [test/e2e.test.ts](file:///c:/Users/sebas/OneDrive/Escritorio/Arkad/Instruction_Decoder/test/e2e.test.ts)
+* **File:** [test/e2e.test.ts](./test/e2e.test.ts)
 * **Goal:** Prove that the full pipeline does not fail, executes instructions within optimal performance bounds, and catches syntax errors.
 * **Key Details:**
   * Performs full round-trip tests for R-type, I-type, jumps, branches, and memory instructions.
@@ -81,7 +81,7 @@ pnpm test test/e2e.test.ts --run
 ---
 
 ### 3. BIT MANIPULATION UNIT TESTS (BIT UTILS)
-* **File:** [test/bit.utils.test.ts](file:///c:/Users/sebas/OneDrive/Escritorio/Arkad/Instruction_Decoder/test/bit.utils.test.ts)
+* **File:** [test/bit.utils.test.ts](./test/bit.utils.test.ts)
 * **Goal:** Verify the precision of binary string manipulation helper utilities for the encoder/decoder.
 * **Key Details:**
   * Tests conversions for `hexToBits` and `bitsToHex`.
@@ -99,7 +99,7 @@ pnpm test test/bit.utils.test.ts --run
 ---
 
 ### 4. LIMIT AND FRONTIER TESTS (BOUNDARY TESTS)
-* **File:** [test/boundary.test.ts](file:///c:/Users/sebas/OneDrive/Escritorio/Arkad/Instruction_Decoder/test/boundary.test.ts)
+* **File:** [test/boundary.test.ts](./test/boundary.test.ts)
 * **Goal:** Analyze the pipeline's behavior when processing minimum, maximum, and boundary values.
 * **Key Details:**
   * 16-bit signed immediates: validates exact boundaries for `-32768` and `32767`.
@@ -117,7 +117,7 @@ pnpm test test/boundary.test.ts --run
 ---
 
 ### 5. CONSTANTS INTEGRITY TESTS
-* **File:** [test/constants.integrity.test.ts](file:///c:/Users/sebas/OneDrive/Escritorio/Arkad/Instruction_Decoder/test/constants.integrity.test.ts)
+* **File:** [test/constants.integrity.test.ts](./test/constants.integrity.test.ts)
 * **Goal:** Prevent opcode collisions, duplicate functions, or mismapped registers from breaking instruction encoding/decoding.
 * **Key Details:**
   * Validates that there are no duplicate names or bit mappings in the registers dictionary.
@@ -134,7 +134,7 @@ pnpm test test/constants.integrity.test.ts --run
 ---
 
 ### 6. INSTRUCTION COVERAGE TESTS
-* **File:** [test/coverage.test.ts](file:///c:/Users/sebas/OneDrive/Escritorio/Arkad/Instruction_Decoder/test/coverage.test.ts)
+* **File:** [test/coverage.test.ts](./test/coverage.test.ts)
 * **Goal:** Ensure every supported MIPS instruction has at least one functional test case verifying a full round-trip.
 * **Key Details:**
   * Covers arithmetic (`add`, `sub`, `addu`), logical (`and`, `or`, `xor`), shift, branch, and memory (`lw`, `sw`) instructions.
@@ -150,7 +150,7 @@ pnpm test test/coverage.test.ts --run
 ---
 
 ### 7. ASSEMBLY PARSER TESTS
-* **File:** [test/parser.test.ts](file:///c:/Users/sebas/OneDrive/Escritorio/Arkad/Instruction_Decoder/test/parser.test.ts)
+* **File:** [test/parser.test.ts](./test/parser.test.ts)
 * **Goal:** Ensure the syntactic formatter correctly interprets the textual structure of MIPS assembly code.
 * **Key Details:**
   * Handles comments (`#`), extra whitespaces, line breaks, and tabs.
@@ -167,7 +167,7 @@ pnpm test test/parser.test.ts --run
 ---
 
 ### 8. HANDLER REGISTRY TESTS
-* **File:** [test/registry.test.ts](file:///c:/Users/sebas/OneDrive/Escritorio/Arkad/Instruction_Decoder/test/registry.test.ts)
+* **File:** [test/registry.test.ts](./test/registry.test.ts)
 * **Goal:** Verify the dynamic registry mapping assembly instructions to their binary handlers.
 * **Key Details:**
   * Tests searching for MIPS instructions by object format.
@@ -184,7 +184,7 @@ pnpm test test/registry.test.ts --run
 ---
 
 ### 9. STRESS TESTS
-* **File:** [test/stress.test.ts](file:///c:/Users/sebas/OneDrive/Escritorio/Arkad/Instruction_Decoder/test/stress.test.ts)
+* **File:** [test/stress.test.ts](./test/stress.test.ts)
 * **Goal:** Validate robustness by running consecutive round-trip conversions for 100% of defined instructions.
 * **Key Details:**
   * Encodes and decodes every registered instruction in sequence to guarantee full stability.
@@ -200,7 +200,7 @@ pnpm test test/stress.test.ts --run
 ---
 
 ### 10. PERFORMANCE & SCALABILITY TESTS
-* **File:** [test/performance.test.ts](file:///c:/Users/sebas/OneDrive/Escritorio/Arkad/Instruction_Decoder/test/performance.test.ts)
+* **File:** [test/performance.test.ts](./test/performance.test.ts)
 * **Goal:** Ensure the library remains fast and does not introduce bottlenecks as the volume of source instructions increases.
 * **Key Details:**
   * Benchmarks performance by compiling thousands of instructions per second.
@@ -217,7 +217,7 @@ pnpm test test/performance.test.ts --run
 ---
 
 ### 11. DIAGNOSTIC TESTS
-* **File:** [test/diagnostic.test.ts](file:///c:/Users/sebas/OneDrive/Escritorio/Arkad/Instruction_Decoder/test/diagnostic.test.ts)
+* **File:** [test/diagnostic.test.ts](./test/diagnostic.test.ts)
 * **Goal:** Print the loader configuration inside the encoder for visual auditing.
 * **Key Details:**
   * Outputs a structured console table (`console.table`) of all active opcodes, funct fields, shamt fields, and target instruction versions.

@@ -1,22 +1,22 @@
 # MIPS Instruction Decoder & Encoder
 
-Este proyecto es una herramienta y librería en **TypeScript** diseñada para realizar el flujo completo de **análisis (parsing), codificación (encoding), decodificación (decoding) y formateo** de instrucciones de la arquitectura **MIPS**. 
+This project is a tool and library written in **TypeScript** designed to perform the complete workflow of **parsing, encoding, decoding, and formatting** MIPS architecture instructions.
 
-Soporta conjuntos de instrucciones tanto **MIPS I (Legacy)** como **MIPS R6**.
-
----
-
-##  Requisitos Previos
-
-Asegúrate de tener instalados los siguientes componentes antes de iniciar:
-* [Node.js](https://nodejs.org/) (Versión 18 o superior recomendada)
-* [pnpm](https://pnpm.io/) (Gestor de paquetes utilizado en este proyecto)
+It supports both **MIPS I (Legacy)** and **MIPS R6** instruction sets.
 
 ---
 
-##  Instalación de Dependencias
+## Prerequisites
 
-Para instalar todas las dependencias necesarias del proyecto, abre tu terminal en la carpeta raíz del proyecto y ejecuta:
+Before getting started, make sure you have the following installed:
+* [Node.js](https://nodejs.org/) (Version 18 or higher recommended)
+* [pnpm](https://pnpm.io/) (The package manager used in this project)
+
+---
+
+## Dependency Installation
+
+To install all the necessary project dependencies, open your terminal in the project's root folder and run:
 
 ```bash
 pnpm install
@@ -24,68 +24,68 @@ pnpm install
 
 ---
 
-##  Cómo Ejecutar las Pruebas (Tests)
+## How To Run The Tests
 
-Este proyecto utiliza **Vitest** como framework de pruebas. A continuación tienes los comandos para los diferentes modos de ejecución:
+This project uses **Vitest** as its test runner. Here are the commands for different execution modes:
 
-### 1. Ejecutar todas las pruebas una vez (CI/CD / Verificación rápida)
+### 1. Run all tests once (CI/CD / Quick Verification)
 ```bash
 pnpm test run
 ```
 
-### 2. Ejecutar pruebas en modo observador (Watch Mode)
-Las pruebas se ejecutan automáticamente cada vez que editas o guardas un archivo:
+### 2. Run tests in watch mode
+Tests will run automatically every time you edit or save a file:
 ```bash
 pnpm test
 ```
 
-### 3. Ejecutar un archivo de prueba específico
-Si estás trabajando en una parte específica y quieres probar solo ese archivo (por ejemplo, `e2e.test.ts`):
+### 3. Run a specific test file
+If you are working on a specific feature and want to test only that file (e.g., `e2e.test.ts`):
 ```bash
 pnpm test test/e2e.test.ts --run
 ```
 
-### 4. Generar reporte de cobertura de código (Coverage)
-Para analizar qué partes del código están cubiertas por las pruebas unitarias:
+### 4. Generate code coverage reports
+To see how much of the code is covered by unit tests:
 ```bash
 pnpm exec vitest run --coverage
 ```
 
 ---
 
-##  Cómo Ejecutar y Compilar el Código
+## How To Run and Build The Code
 
-### Opción A: Ejecución directa en desarrollo (Sin compilar manualmente)
-Puedes correr directamente cualquier script de TypeScript usando `tsx` de manera rápida:
+### Option A: Direct execution in development (No manual compilation required)
+You can directly run any TypeScript file (such as the entry point `src/main.ts`) using `tsx`:
 
 ```bash
 npx tsx src/main.ts
 ```
 
-### Opción B: Proceso de compilación y ejecución estándar (Producción)
+### Option B: Standard compilation and execution (Production)
 
-1. **Compilar el proyecto** a JavaScript nativo:
+1. **Compile the project** to native JavaScript:
    ```bash
    pnpm exec tsc
    ```
-   *(Esto generará los archivos resultantes en el directorio `dist/`)*
+   *(This will generate the output files inside the `dist/` directory)*
 
-2. **Ejecutar el archivo compilado**:
+2. **Execute the compiled file**:
    ```bash
    node dist/main.js
    ```
 
 ---
 
-## 📁 Estructura Principal del Proyecto
+## Main Project Structure
 
-El proyecto está organizado de la siguiente manera:
+The project is structured as follows:
 
-* 📂 **`src/`** — Código fuente principal.
-  * 📂 `src/constants/` — Constantes de encondings para MIPS R6 y Legacy.
-  * 📂 `src/services/` — Parsers de código ensamblador y gestores de encoding/decoding.
-  * 📂 `src/utils/` — Funciones de ayuda (manipulación de bits, registros, formato de operandos).
-  * 📄 `src/main.ts` — Punto de entrada de la aplicación.
-* 📂 **`test/`** — Conjunto completo de pruebas unitarias, de integración, rendimiento, estrés y E2E.
-* 📄 `tsconfig.json` — Configuración del compilador TypeScript.
-* 📄 `vitest.config.ts` — Configuración del framework Vitest.
+* 📂 **`src/`** — Main source code.
+  * 📂 `src/constants/` — Encoding constant mappings for MIPS R6 and Legacy.
+  * 📂 `src/services/` — Assembly parsers, instruction parsers, and registry services.
+  * 📂 `src/utils/` — Helper functions (bit manipulation, registers, operand formatters).
+  * 📄 `src/main.ts` — Main entry point.
+* 📂 **`test/`** — Test suites including unit, integration, performance, stress, and E2E tests.
+* 📄 `tsconfig.json` — TypeScript compiler configuration.
+* 📄 `vitest.config.ts` — Vitest configuration file.

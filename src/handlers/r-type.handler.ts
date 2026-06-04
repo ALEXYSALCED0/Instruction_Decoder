@@ -24,8 +24,8 @@ export const rTypeHandler = {
 
     instructions: buildInstructionDescriptions(isRTypeEncoding),
     
-    encode(instruction: DecodedInstruction): string {
-        const encoded = getEncoding(instruction.mnemonic, HANDLER);
+    encode(instruction: DecodedInstruction, version:MipsVersion): string {
+        const encoded = getEncoding(instruction.mnemonic, HANDLER, version);
         const { mnemonic, operands } = instruction;
 
         if ( ! encoded?.funct )
@@ -60,7 +60,16 @@ export const rTypeHandler = {
     decode(bits32: string, version: MipsVersion): DecodedInstruction {
         const { rs, rt, rd, shamt, funct } = sliceBits(bits32);
 
-        const encoded = ENCODING_BY_FUNCT[`${funct}:${shamt}`] ?? ENCODING_BY_FUNCT[`${funct}:*`];
+        const tryFunct = (v: MipsVersion) =>
+            ENCODING_BY_FUNCT[`${funct}:${shamt}:${v}`] ??
+            ENCODING_BY_FUNCT[`${funct}:*:${v}`];
+
+        const encoded =
+            tryFunct(version) ??
+            tryFunct('mips1') ??
+            tryFunct('mips2') ??
+            tryFunct('legacy') ??
+            tryFunct('r6');
 
         if ( ! encoded )
             throw new HandlerError({ type:'UNKNOWN_FUNCT', message:`[R-type-handler] funct desconocido ${funct} shamt ${shamt}`})

@@ -4,7 +4,7 @@ import { InstructionHandler } from "@/types/handler.types";
 import { DecodedInstruction } from "@/types/instruction.types";
 import { ImmediateOperand, RegisterOperand } from "@/types/operand.types";
 import { MipsVersion } from "@/types/version.types";
-import { constToBits, sliceBits } from "@/utils/bit.utils";
+import { bitsToSignedNum, constToBits, sliceBits } from "@/utils/bit.utils";
 import { buildInstructionDescriptions, findEncodingByOpcode, getEncoding } from "@/utils/handler.utils";
 import { regBitsToName, regNameToBits } from "@/utils/register.utils";
 
@@ -15,9 +15,9 @@ const isITypeEncoding = (e: { mnemonic: string }) => I_TYPE_MNEMONICS.includes(e
 export const iTypeHandler = {
 
     instructions: buildInstructionDescriptions(isITypeEncoding),
-    
-    encode(instruction: DecodedInstruction): string {
-        const encoded = getEncoding(instruction.mnemonic, HANDLER);
+
+    encode(instruction: DecodedInstruction, version: MipsVersion): string {
+        const encoded = getEncoding(instruction.mnemonic, HANDLER, version);
         const { mnemonic, operands } = instruction;
 
         if (mnemonic === 'lui') {
@@ -31,14 +31,28 @@ export const iTypeHandler = {
         const imm = constToBits((operands[2] as ImmediateOperand).value, 16);
         return encoded.opcode + rs + rt + imm;
     },
-    
+
     decode(bits32: string, version: MipsVersion): DecodedInstruction {
         const { opcode, rs, rt, imm16 } = sliceBits(bits32);
 
-        const encoded = findEncodingByOpcode(opcode, isITypeEncoding, HANDLER);
+        // Buscar encoding respetando la versión
+        const encoded = findEncodingByOpcode(opcode, isITypeEncoding, HANDLER, version);
 
-        // del legacy, LUI es AUI con rs=00000    translator.service.ts[:862]
-        const mnemonic = (encoded.mnemonic === 'aui' && rs === REG_ZERO) ? 'lui' : encoded.mnemonic;
+        // lui (rs=0) y aui (rs!=0) comparten opcode 001111 en R6
+        const isLuiAuiOpcode = encoded.mnemonic === 'lui' || encoded.mnemonic === 'aui';
+        const mnemonic = isLuiAuiOpcode
+            ? (rs === REG_ZERO ? 'lui' : 'aui')
+            : encoded.mnemonic;
+
+        if (mnemonic === 'aui')
+            return {
+                mnemonic: 'aui',
+                operands: [
+                    { kind: 'register', name: regBitsToName(rt as RegisterBits) },
+                    { kind: 'register', name: regBitsToName(rs as RegisterBits) },
+                    { kind: 'immediate', value: parseInt(imm16, 2) },
+                ],
+            };
 
         if (mnemonic === 'lui')
             return {
@@ -54,7 +68,7 @@ export const iTypeHandler = {
             operands: [
                 { kind: 'register', name: regBitsToName(rt as RegisterBits) },
                 { kind: 'register', name: regBitsToName(rs as RegisterBits) },
-                { kind: 'immediate', value: parseInt(imm16, 2) },
+                { kind: 'immediate', value: bitsToSignedNum(imm16, 16) },
             ],
         };
     },

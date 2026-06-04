@@ -14,8 +14,8 @@ export const jTypeHandler = {
 
     instructions: buildInstructionDescriptions(isJTypeEncoding),
 
-    encode(instruction: DecodedInstruction): string {
-        const encoded = getEncoding(instruction.mnemonic, HANDLER);
+    encode(instruction: DecodedInstruction, version:MipsVersion ): string {
+        const encoded = getEncoding(instruction.mnemonic, HANDLER, version);
 
         const address = constToBits((instruction.operands[0] as ImmediateOperand).value, 26);
         return encoded.opcode + address;

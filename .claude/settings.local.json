@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -e \"const leg = require\\('./src/data/mips-instructions.json'\\); leg.filter\\(i => i.type === 'I' && !['lw','sw','lb','lbu','lh','lhu','sb','sh','addi','addiu','andi','ori','xori','slti','sltiu','lui'].includes\\(i.mnemonic.toLowerCase\\(\\)\\)\\).forEach\\(i => console.log\\(JSON.stringify\\({m:i.mnemonic,op:i.opcode,args:i.args}\\)\\)\\);\")",
+      "Bash(npx vitest *)",
+      "Bash(pnpm vitest *)"
+    ]
+  }
+}

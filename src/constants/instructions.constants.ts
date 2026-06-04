@@ -7,6 +7,7 @@ import legacyRaw from '@/data/mips-instructions.json';
 import r6Raw from '@/data/mips-r6-instructions.json';
 
 import type { InstructionEncoding } from '@/types/instruction.types';
+import { parseVersion } from '@/types/version.types';
 
 /* 
     TODO: TypeGuard para validar que los datos raw se parseen bien. 
@@ -33,7 +34,7 @@ export const ENCODING_BY_FUNCT: Readonly<Record<string, InstructionEncoding>> =
         INSTRUCTION_ENCODINGS
             .filter(instruction => instruction.funct !== undefined)
             .map(instruction => [
-                `${instruction.funct}:${instruction.shamt ?? '*'}`,
+                `${instruction.funct}:${instruction.shamt ?? '*'}:${parseVersion(instruction.version)}`,
                 instruction,
             ]),
     );

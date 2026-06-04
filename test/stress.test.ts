@@ -1,8 +1,10 @@
 import { describe, it, expect } from 'vitest';
-import { INSTRUCTION_ENCODINGS } from '../src/constants/instructions.constants';
+import { ENCODING_BY_FUNCT, INSTRUCTION_ENCODINGS } from '../src/constants/instructions.constants';
 import { encodeInstruction, decodeInstruction } from '../src/services/handler.registry.service';
 import type { Operand } from '../src/types/operand.types';
 import type { DecodedInstruction } from '../src/types/instruction.types';
+import { parseVersion } from '../src/types/version.types';
+import { sliceBits } from '../src/utils/bit.utils'
 
 function mockOperand(argName: string): Operand {
     switch (argName) {
@@ -29,14 +31,15 @@ function mockOperand(argName: string): Operand {
 }
 
 describe('MIPS Encoder/Decoder Stress Test (100% de instrucciones)', () => {
-    
-    // Lista de excepciones donde el round-trip de mnemónico difiere por diseño o duplicidad
+    // Lista de excepciones donde el round-trip de mnemónico difiere por diseño
     const MNEMONIC_ALIASES: Record<string, string> = {
-        'aui': 'lui', // aui con rs=00000 se decodifica como lui por diseño
+        // El mock usa rs=t1(9) < rt=t2(10), lo que codifica bits idénticos a beqc/bnec
+        'bovc': 'beqc',
+        'bnvc': 'bnec',
     };
 
     for (const encoding of INSTRUCTION_ENCODINGS) {
-        const version = encoding.version.includes('R6') ? 'r6' : 'legacy';
+        const version = parseVersion(encoding.version);
 
         // Omitir instrucciones especiales que no tienen representación estándar de operandos o casos especiales
         // Por ejemplo, "nal" y "bal" en legacy/r6 a veces comparten opcodes con bgez/bltz,

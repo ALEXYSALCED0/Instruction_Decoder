@@ -16,8 +16,8 @@ export const memoryHandler = {
 
     instructions: buildInstructionDescriptions(isMemoryEncoding),
     
-    encode(instruction: DecodedInstruction): string {
-        const encoded = getEncoding(instruction.mnemonic, HANDLER);
+    encode(instruction: DecodedInstruction, version:MipsVersion): string {
+        const encoded = getEncoding(instruction.mnemonic, HANDLER, version);
 
         // rt, offset(base) es opcode | rs(base) | rt | offset16
         const rt        = regNameToBits((instruction.operands[0] as RegisterOperand).name);
